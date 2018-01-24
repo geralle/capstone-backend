@@ -8,8 +8,6 @@ const port = process.env.PORT || 8000
 const app = express()
 
 const index = require('./routes/index')
-const profile = require('./routes/profile')
-
 let cookieKey = process.env.COOKIE_KEY || 'keyboard cat'
 
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +25,6 @@ app.use(cookieSession({
 
 
 app.use('/', index)
-app.use('/profile', profile)
 
 app.listen(port, data =>{
   console.log("listening on... http://localhost:"+port)

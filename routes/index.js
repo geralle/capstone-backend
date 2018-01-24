@@ -17,19 +17,27 @@ router.get('/api/allusers', function(req, res){
   })
 })
 
-router.post('/login', function(req,res){
-  db.getUsers(req.body)
+router.get('/api/user/:id', function(req, res){
+  db.getUser()
   .then(function(data){
-    if(data.length > 0){
-      req.session.user = data[0].id
-      res.redirect('/profile')
-    }else{
-      res.redirect('/')
-    }
+    res.json(data)
   })
 })
 
-router.post('/create', function(req,res){
+router.post('/api/user/login', function(req,res){
+  console.log(req.body)
+  // db.getUsers(req.body)
+  // .then(function(data){
+  //   if(data.length > 0){
+  //     req.session.user = data[0].id
+  //     res.redirect('/profile')
+  //   }else{
+  //     res.redirect('/')
+  //   }
+  // })
+})
+
+router.post('/api/user/create', function(req,res){
   db.createUser(req.body)
   .then(function(data){
     req.session.user = data
@@ -37,12 +45,9 @@ router.post('/create', function(req,res){
   })
 })
 
-router.delete(){
-
-}
-
-router.put(){
-  
-}
+router.post('/api/user/logout', function(req, res){
+  req.session.userId = null
+  res.redirect('/')
+})
 
 module.exports = router;
