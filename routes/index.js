@@ -11,15 +11,34 @@ router.get('/', function(req, res){
 })
 
 // editAdminInfo,
-// editAppointmentsById,
-// createAnAdminAcct,
-// createAppointment, - hidden names in input
+// createAnAdminAcct
 
-router.put('/api/editappointment/:id', function(req,res){
-  db.editAppointmentsById(req.body)
-  .then(function(data){
+// APPROVE APPT BY ID
+router.put('/api/approveappt/:id/edit', function(req,res){
+  db.approveAppointmentById(req.params).then(function(data){
     res.json(data)
   })
+})
+
+// CREATE APPOINTMENTS
+router.post('/api/appointment/create', function(req,res){
+  var appointmentIds = []
+  for(var i=0;i<3;i++){
+    var month = req.body.month[i],
+        day = req.body.day[i],
+        year = req.body.year[i],
+        hour = req.body.hour[i],
+        minute = req.body.minute[i],
+        ampm = req.body.ampm[i],
+        description =  req.body.description,
+        title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
+    db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
+      db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
+        console.log(data)
+        res.redirect('/')
+      })
+    })
+  }
 })
 
 // EDIT USER BY ID
@@ -31,7 +50,7 @@ router.put('/api/user/:id/edit', function(req,res){
 })
 
 // CREATE A NEW USER
-router.post('/api/user/createUser', function(req,res){
+router.post('/api/user/create', function(req,res){
   db.checkUserEmail(req.body)
   .then(function(data){
     if(data[0]){
@@ -50,8 +69,16 @@ router.post('/api/user/createUser', function(req,res){
   })
 })
 
+// CREATE ADMIN ACCT
+router.post('/api/admin/create', function(req,res){
+  db.createAnAdminAcct(req.body)
+  .then(function(data){
+    console.log(data)
+  })
+})
+
 // DELETE USER BY ID
-router.delete('/api/deleteuser/:id', function(req,res){
+router.delete('/api/user/:id/delete', function(req,res){
   db.deleteUserById(req.params)
   .then(function(data){
     res.json(data)
@@ -79,7 +106,7 @@ router.post('/api/user/logout', function(req, res){
 })
 
 // GET ALL APPOINTMENT BY USER
-router.get('/api/alluserappts/:user_id', function(req,res){
+router.get('/api/user/appts/:user_id', function(req,res){
   db.getAllApptsByUser(req.params)
   .then(function(data){
     res.json(data)
@@ -87,7 +114,7 @@ router.get('/api/alluserappts/:user_id', function(req,res){
 })
 
 // GET ALL APPOINTMENTS
-router.get('/api/allappts', function(req,res){
+router.get('/api/appts/all', function(req,res){
   db.getAllAppts()
   .then(function(data){
     res.json(data)
@@ -95,7 +122,7 @@ router.get('/api/allappts', function(req,res){
 })
 
 // GET ALL USERS
-router.get('/api/allusers', function(req, res){
+router.get('/api/user/all', function(req, res){
   db.getAllUsers()
   .then(function(data){
     res.json(data)

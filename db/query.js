@@ -1,20 +1,30 @@
 var db = require('./knex')
 
-function createAppointment(data){
-  return db('appointments').insert({
-    month: data.month,
-    day: data.day,
-    year: data.year,
-    time: data.time,
-    ampm: data.ampm,
-    description: data.description,
-    approved: data.approved,
-    title: data.name
+function approveAppointmentById(data){
+  return db('appointments')
+  .where('id', data.id)
+  .update({
+    approved: true
   })
 }
 
+function createAppointment(month,day,year,hour,minute,ampm,description,title){
+  return db('appointments').insert({
+    month: month,
+    day: day,
+    year: year,
+    hour: hour,
+    minute: minute,
+    ampm: ampm,
+    description: description,
+    approved: false,
+    title: title
+  }).returning('id')
+}
+
 function createAnAdminAcct(data){
-  return db('users').insert({
+  // console.log(typeof )
+  return db('admin_acct').insert({
     email: data.email,
     name: data.name,
     phone_number: data.phone_number,
@@ -23,8 +33,15 @@ function createAnAdminAcct(data){
     address: data.address,
     city: data.city,
     state: data.state,
-    zipcode: data.zipcode
+    zipcode: Number(data.zipcode)
   }).returning('id')
+}
+
+function createUserAppts(apptId, userId){
+  return db('users_appts').insert({
+    user_id: userId,
+    appt_id: apptId
+  })
 }
 
 function createANewUser(data){
@@ -76,7 +93,7 @@ function editUserById(data, param){
   return db('users').where('id', param.id).update({
     f_name: data.f_name,
     l_name: data.l_name,
-    email: data.usrname,
+    email: data.email,
     password: data.password,
     phone_number: data.phone_number
   })
@@ -96,14 +113,6 @@ function editAdminInfo(data){
   })
 }
 
-function editAppointmentsById(data){
-  return db.select('appointments')
-  .where('id', data.id)
-  .update({
-
-  })
-}
-
 module.exports = {
   getAllUsers,
   getAllAppts,
@@ -112,11 +121,12 @@ module.exports = {
   editAdminInfo,
   editUserById,
   createANewUser,
-  editAppointmentsById,
+  approveAppointmentById,
   createAnAdminAcct,
   deleteUserById,
   createAppointment,
   createAppointment,
   checkUserEmail,
-  loginUser
+  loginUser,
+  createUserAppts
 }
