@@ -1,13 +1,5 @@
 var db = require('./knex')
 
-function editAppointmentsById(data){
-  return db.select('appointments')
-  .where('id', data.id)
-  .update({
-
-  })
-}
-
 function createAppointment(data){
   return db('appointments').insert({
     month: data.month,
@@ -35,19 +27,21 @@ function createAnAdminAcct(data){
   }).returning('id')
 }
 
-function getAllApptsByUser(){
+function createANewUser(data){
+  return db('users').insert({
+    'f_name': data.f_name,
+    'l_name': data.l_name,
+    'email': data.email,
+    'password': data.password,
+    'phone_number': data.phone_number
+  }).returning('id')
+}
+
+function getAllApptsByUser(data){
   return db.select('*').from('users_appts')
   .innerJoin('users','users_appts.user_id', 'users.id')
   .innerJoin('appointments', 'users_appts.appt_id', 'appointments.id')
-}
-
-// login
-function loginUser(data) {
-  return db.select('*').from('users')
-  .where({
-    'username': data.username,
-    'password': data.password,
-  })
+  .where('user_id',data.user_id)
 }
 
 function getAllUsers(){
@@ -62,23 +56,27 @@ function getUserById(data){
   return db.select('*').from('users').where('id', data.id)
 }
 
-function createANewUser(data){
-  return db('users').insert({
-    'name': data.name,
+function checkUserEmail(data){
+  return db.select('*').from('users').where('email',data.email)
+}
+
+function loginUser(data) {
+  return db.select('*').from('users')
+  .where({
     'email': data.email,
     'password': data.password,
-    'phone_number': data.phone_number
-  }).returning('id')
+  })
 }
 
 function deleteUserById(data){
   return db('users').where('id', data.id).del()
 }
 
-function editUserById(data){
-  return db('users').where('id', data.id).update({
-    name: data.name,
-    usrname: data.usrname,
+function editUserById(data, param){
+  return db('users').where('id', param.id).update({
+    f_name: data.f_name,
+    l_name: data.l_name,
+    email: data.usrname,
     password: data.password,
     phone_number: data.phone_number
   })
@@ -98,8 +96,12 @@ function editAdminInfo(data){
   })
 }
 
-function getAllUsers(data){
-  return db('users')
+function editAppointmentsById(data){
+  return db.select('appointments')
+  .where('id', data.id)
+  .update({
+
+  })
 }
 
 module.exports = {
@@ -114,5 +116,7 @@ module.exports = {
   createAnAdminAcct,
   deleteUserById,
   createAppointment,
-  createAppointment
+  createAppointment,
+  checkUserEmail,
+  loginUser
 }
