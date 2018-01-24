@@ -1,8 +1,24 @@
 var db = require('./knex')
 
 function editAppointmentsById(data){
-  return db.select('*').from('appointments')
+  return db.select('appointments')
   .where('id', data.id)
+  .update({
+
+  })
+}
+
+function createAppointment(data){
+  return db('appointments').insert({
+    month: data.month,
+    day: data.day,
+    year: data.year,
+    time: data.time,
+    ampm: data.ampm,
+    description: data.description,
+    approved: data.approved,
+    title: data.name
+  })
 }
 
 function createAnAdminAcct(data){
@@ -22,7 +38,7 @@ function createAnAdminAcct(data){
 function getAllApptsByUser(){
   return db.select('*').from('users_appts')
   .innerJoin('users','users_appts.user_id', 'users.id')
-  .innerjoin('appointments', 'users_appts.appt_id', 'appointments.id')
+  .innerJoin('appointments', 'users_appts.appt_id', 'appointments.id')
 }
 
 // login
@@ -39,11 +55,11 @@ function getAllUsers(){
 }
 
 function getAllAppts(){
-  return db.select('*').from('appoint')
+  return db.select('*').from('appointments')
 }
 
 function getUserById(data){
-  return db.select('*').from('users').where('id', data.id).first()
+  return db.select('*').from('users').where('id', data.id)
 }
 
 function createANewUser(data){
@@ -87,5 +103,16 @@ function getAllUsers(data){
 }
 
 module.exports = {
-
+  getAllUsers,
+  getAllAppts,
+  getAllApptsByUser,
+  getUserById,
+  editAdminInfo,
+  editUserById,
+  createANewUser,
+  editAppointmentsById,
+  createAnAdminAcct,
+  deleteUserById,
+  createAppointment,
+  createAppointment
 }
