@@ -10,9 +10,6 @@ router.get('/', function(req, res){
   })
 })
 
-// editAdminInfo,
-// createAnAdminAcct
-
 // APPROVE APPT BY ID
 router.put('/api/approveappt/:id/edit', function(req,res){
   db.approveAppointmentById(req.params).then(function(data){
@@ -42,8 +39,8 @@ router.post('/api/appointment/create', function(req,res){
 })
 
 // EDIT USER BY ID
-router.put('/api/user/:id/edit', function(req,res){
-  db.editUserById(req.body, req.params)
+router.put('/api/user/edit', function(req,res){
+  db.editUserById(req.body)
   .then(function(data){
     res.json(data)
   })
@@ -73,7 +70,15 @@ router.post('/api/user/create', function(req,res){
 router.post('/api/admin/create', function(req,res){
   db.createAnAdminAcct(req.body)
   .then(function(data){
-    console.log(data)
+    res.json(data)
+  })
+})
+
+// EDIT ADMIN ACCT
+router.put('/api/admin/edit', function(req,res){
+  db.editAdminInfo(req.body)
+  .then(function(data){
+    res.json(data)
   })
 })
 

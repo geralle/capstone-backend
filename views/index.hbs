@@ -11,8 +11,10 @@
       <h1>{{title}}</h1>
     </header>
     <main>
-      <form class="container" method="post" action="/api/admin/create">
+      <!-- <form class="container" method="post" action="/api/admin/create"> -->
+      <form class="container" method="post" action="/api/admin/edit?_method=PUT">
         <h3>Create Admin Account</h3>
+        <input type="hidden" name="id" value="2">
         <div class="form-group">
           <input class="form-control col-4" type="text" name="email" placeholder="Email">
         </div>
@@ -43,8 +45,9 @@
         </div>
         <button type="submit" class="btn btn-info">Create</button>
       </form>
-      <form class="container" method="post" action="/api/user/3/edit?_method=PUT">
+      <form class="container" method="post" action="/api/user/edit?_method=PUT">
         <h3>Edit User</h3>
+        <input type="hidden" name="id" value="3">
         <div class="form-group">
           <input class="form-control col-4" type="text" name="f_name" placeholder="First Name">
         </div>

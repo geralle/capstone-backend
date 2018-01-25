@@ -23,7 +23,6 @@ function createAppointment(month,day,year,hour,minute,ampm,description,title){
 }
 
 function createAnAdminAcct(data){
-  // console.log(typeof )
   return db('admin_acct').insert({
     email: data.email,
     name: data.name,
@@ -89,8 +88,8 @@ function deleteUserById(data){
   return db('users').where('id', data.id).del()
 }
 
-function editUserById(data, param){
-  return db('users').where('id', param.id).update({
+function editUserById(data){
+  return db('users').where('id', data.id).update({
     f_name: data.f_name,
     l_name: data.l_name,
     email: data.email,
@@ -100,7 +99,9 @@ function editUserById(data, param){
 }
 
 function editAdminInfo(data){
-  return db('users').where('id', data.id).update({
+  return db('admin_acct')
+  .where('id', data.id)
+  .update({
     email: data.email,
     name: data.name,
     phone_number: data.phone_number,
@@ -109,7 +110,7 @@ function editAdminInfo(data){
     address: data.address,
     city: data.city,
     state: data.state,
-    zipcode: data.zipcode
+    zipcode: Number(data.zipcode)
   })
 }
 
