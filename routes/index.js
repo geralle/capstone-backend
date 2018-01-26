@@ -57,7 +57,7 @@ router.post('/api/user/create', function(req,res){
       .then(function(data){
         if(data.length > 0){
           req.session.user = data[0].id
-          res.redirect('/')
+          res.redirect('http://localhost:4000/')
         }else{
           res.redirect('/')
         }
@@ -97,9 +97,9 @@ router.post('/api/user/login', function(req,res){
     if(data.length > 0){
       req.session.user = data[0].id
       console.log('Your Signed In')
-      res.redirect('/')
+      res.redirect('http://localhost:4000/?='+data[0].id)
     }else{
-      res.redirect('/')
+      res.redirect('http://localhost:4000/login?=error')
     }
   })
 })
