@@ -51,20 +51,27 @@ router.post('/api/user/create', function(req,res){
   db.checkUserEmail(req.body)
   .then(function(data){
     if(data[0]){
-      console.log('User already exists')
+      res.redirect('http://localhost:4000/register?=error')
     }else{
       db.createANewUser(req.body)
       .then(function(data){
         if(data.length > 0){
-          req.session.user = data[0].id
-          res.redirect('http://localhost:4000/')
+          var token = db.generateToken()
+          db.updateToken(req.body.email,token)
+          .then(function(data){
+            res.clearCookie('token')
+            res.cookie('token', token)
+            res.redirect('http://localhost:4000/')
+          })
         }else{
-          res.redirect('/')
+          res.redirect('http://localhost:4000/register?=error')
         }
       })
     }
   })
 })
+
+
 
 // CREATE ADMIN ACCT
 router.post('/api/admin/create', function(req,res){
@@ -98,7 +105,7 @@ router.post('/api/user/login', function(req,res){
       var token = db.generateToken()
       db.updateToken(req.body.email,token)
       .then(function(data){
-        res.clearCookie('token')
+        res.cookie('token', '')
         res.cookie('token', token)
         res.redirect('http://localhost:4000/')
       })
@@ -149,7 +156,6 @@ router.get('/api/user/:id', function(req, res){
   })
 })
 
-// http://localhost:8000/api/usertoken/ZmKfjl3kbc1GIpb8lDsQLzTqWYkuyP
 router.get('/api/usertoken/:token', function(req,res){
   db.getUserByUserToken(req.params.token)
   .then(function(data){
