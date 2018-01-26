@@ -56,7 +56,7 @@ router.post('/api/user/create', function(req,res){
       db.createANewUser(req.body)
       .then(function(data){
         if(data.length > 0){
-          var token = db.generateToken()
+          var token = req.body.token
           db.updateToken(req.body.email,token)
           .then(function(data){
             res.clearCookie('token')
@@ -102,7 +102,7 @@ router.post('/api/user/login', function(req,res){
   db.loginUser(req.body)
   .then(function(data){
     if(data.length > 0){
-      var token = db.generateToken()
+      var token = req.body.token
       db.updateToken(req.body.email,token)
       .then(function(data){
         res.cookie('token', '')
