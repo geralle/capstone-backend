@@ -36,6 +36,35 @@ function createAnAdminAcct(data){
   }).returning('id')
 }
 
+function generateToken(){
+  var code = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 30; i++){
+    code += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return code;
+}
+
+function updateToken(email, token){
+  return db('users')
+  .where('email', email)
+  .update({
+    token: token
+  })
+}
+
+function releaseToken(token){
+  return db('users')
+  .where('token',token)
+  .update('token','')
+}
+
+function getUserByUserToken(token){
+  return db('users')
+  .where('token', token)
+  .first()
+}
+
 function createUserAppts(apptId, userId){
   return db('users_appts').insert({
     user_id: userId,
@@ -129,5 +158,9 @@ module.exports = {
   createAppointment,
   checkUserEmail,
   loginUser,
-  createUserAppts
+  createUserAppts,
+  updateToken,
+  releaseToken,
+  getUserByUserToken,
+  generateToken
 }

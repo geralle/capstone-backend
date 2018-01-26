@@ -1,3 +1,20 @@
+router.post('/api/user/login', function(req,res){
+  db.loginUser(req.body)
+  .then(function(data){
+    if(data.length > 0){
+      var token = db.gerateToken()
+      console.log(token)
+      req.session.user = data[0].id
+      console.log('Your Signed In')
+      res.redirect('http://localhost:4000/?='+data[0].id)
+    }else{
+      res.redirect('http://localhost:4000/login?=error')
+    }
+  })
+})
+
+
+
 // function bookMultiple(data){
 //   var apptObj = {}
 //   for(var i=0;i<3;i++){

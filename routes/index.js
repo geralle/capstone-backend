@@ -95,9 +95,13 @@ router.post('/api/user/login', function(req,res){
   db.loginUser(req.body)
   .then(function(data){
     if(data.length > 0){
-      req.session.user = data[0].id
-      console.log('Your Signed In')
-      res.redirect('http://localhost:4000/?='+data[0].id)
+      var token = db.generateToken()
+      db.updateToken(req.body.email,token)
+      .then(function(data){
+        res.clearCookie('token')
+        res.cookie('token', token)
+        res.redirect('http://localhost:4000/')
+      })
     }else{
       res.redirect('http://localhost:4000/login?=error')
     }
@@ -105,9 +109,12 @@ router.post('/api/user/login', function(req,res){
 })
 
 // USER LOGOUT
-router.post('/api/user/logout', function(req, res){
-  req.session.userId = null
-  res.redirect('/')
+router.post('/api/user/logout/:token', function(req, res){
+  var token = req.params.token
+  db.releaseToken(token)
+  .then(function(data){
+    console.log(data)
+  })
 })
 
 // GET ALL APPOINTMENT BY USER
@@ -137,6 +144,14 @@ router.get('/api/user/all', function(req, res){
 // GET USER BY ID
 router.get('/api/user/:id', function(req, res){
   db.getUserById(req.params)
+  .then(function(data){
+    res.json(data)
+  })
+})
+
+// http://localhost:8000/api/usertoken/ZmKfjl3kbc1GIpb8lDsQLzTqWYkuyP
+router.get('/api/usertoken/:token', function(req,res){
+  db.getUserByUserToken(req.params.token)
   .then(function(data){
     res.json(data)
   })
