@@ -113,7 +113,7 @@ router.post('/api/user/login', function(req,res){
       .then(function(data){
         res.cookie('token', '')
         res.cookie('token', token)
-        // res.redirect('http://localhost:4000/')
+        res.redirect('http://localhost:4000/')
       })
     }else{
       res.redirect('http://localhost:4000/login?=error')
