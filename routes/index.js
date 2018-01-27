@@ -143,9 +143,8 @@ router.post('/api/user/login', function(req,res){
 router.post('/api/user/logout/:token', function(req, res){
   var token = req.params.token
   db.releaseToken(token)
-  .then(function(data){
-    console.log(data)
-  })
+  .then(()=>{})
+  res.redirect('http://localhost:4000')
 })
 
 // GET ALL APPOINTMENT BY USER
