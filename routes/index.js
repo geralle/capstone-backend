@@ -23,7 +23,7 @@ router.put('/api/approveappt/:id/edit', function(req,res){
   .then(function(data){
     res.json(data)
   })
-  res.redirect('http://localhost:4000/myaccount')
+  res.redirect('http://localhost:4000/admin')
 })
 
 // CREATE APPOINTMENTS
