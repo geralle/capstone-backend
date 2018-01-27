@@ -117,6 +117,10 @@ function deleteUserById(data){
   return db('users').where('id', data.id).del()
 }
 
+function deleteApptById(data){
+  return db('appointments').where('id', data.id).del()
+}
+
 function editUserById(data){
   return db('users')
   .where('id', data.id)
@@ -164,5 +168,6 @@ module.exports = {
   updateToken,
   releaseToken,
   getUserByUserToken,
-  generateToken
+  generateToken,
+  deleteApptById
 }
