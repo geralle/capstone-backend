@@ -19,9 +19,11 @@ router.get('/api/generatetoken', function(req, res){
 
 // APPROVE APPT BY ID
 router.put('/api/approveappt/:id/edit', function(req,res){
-  db.approveAppointmentById(req.params).then(function(data){
+  db.approveAppointmentById(req.params)
+  .then(function(data){
     res.json(data)
   })
+  res.redirect('http://localhost:4000/myaccount')
 })
 
 // CREATE APPOINTMENTS
