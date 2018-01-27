@@ -6,6 +6,7 @@ const path = require('path')
 const methodOverride = require('method-override')
 const port = process.env.PORT || 8000
 const app = express()
+const cors = require('cors')
 
 const index = require('./routes/index')
 let cookieKey = process.env.COOKIE_KEY || 'keyboard cat'
