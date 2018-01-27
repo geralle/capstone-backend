@@ -12,7 +12,8 @@ router.get('/', function(req, res){
 
 router.get('/api/generatetoken', function(req, res){
   var token = db.generateToken()
-  res.send(token)
+  var tokenObj = {'token':token}
+  res.json(tokenObj)
 })
 
 // APPROVE APPT BY ID
