@@ -10,6 +10,7 @@ router.get('/', function(req, res){
   })
 })
 
+// GENERATES A TOKEN FOR CLIENT AND BACKEND
 router.get('/api/generatetoken', function(req, res){
   var token = db.generateToken()
   var tokenObj = {'token':token}
@@ -26,6 +27,7 @@ router.put('/api/approveappt/:id/edit', function(req,res){
 // CREATE APPOINTMENTS
 router.post('/api/appointment/create', function(req,res){
   var appointmentIds = []
+  var apptObj = {}
   for(var i=0;i<3;i++){
     var month = req.body.month[i],
         day = req.body.day[i],
@@ -35,13 +37,23 @@ router.post('/api/appointment/create', function(req,res){
         ampm = req.body.ampm[i],
         description =  req.body.description,
         title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
+    apptObj[i] = {
+      month: month,
+      day: day,
+      year: year,
+      hour: hour,
+      minute: minute,
+      ampm: ampm,
+      description: description,
+      title: title
+    }
     db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
       db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
         console.log(data)
-        res.redirect('/')
       })
     })
   }
+  res.redirect('http://localhost:4000/myaccount')
 })
 
 // EDIT USER BY ID
@@ -76,8 +88,6 @@ router.post('/api/user/create', function(req,res){
     }
   })
 })
-
-
 
 // CREATE ADMIN ACCT
 router.post('/api/admin/create', function(req,res){
@@ -134,7 +144,8 @@ router.post('/api/user/logout/:token', function(req, res){
 router.get('/api/user/appts/:user_id', function(req,res){
   db.getAllApptsByUser(req.params)
   .then(function(data){
-    res.json(data)
+    var apptsObj = {appointments:data}
+    res.json(apptsObj)
   })
 })
 

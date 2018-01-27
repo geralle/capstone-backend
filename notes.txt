@@ -1,3 +1,26 @@
+router.post('/api/appointment/create', function(req,res){
+  var appointmentIds = []
+  var apptObj = {}
+  for(var i=0;i<3;i++){
+    var month = req.body.month[i],
+        day = req.body.day[i],
+        year = req.body.year[i],
+        hour = req.body.hour[i],
+        minute = req.body.minute[i],
+        ampm = req.body.ampm[i],
+        description =  req.body.description,
+        title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
+    console.log(month,day,year,hour,minute,ampm,description,title)
+    // db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
+    //   db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
+    //     console.log(data)
+    //     res.redirect('http://localhost:4000/')
+    //   })
+    // })
+  }
+})
+
+
 router.post('/api/user/login', function(req,res){
   db.loginUser(req.body)
   .then(function(data){
