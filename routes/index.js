@@ -118,7 +118,7 @@ router.delete('/api/user/:id/delete', function(req,res){
 router.delete('/api/appts/:id/delete', function(req,res){
   db.deleteApptById(req.body)
   .then(()=>{})
-  // res.redirect('http://localhost:4000/admin')
+  res.redirect('http://localhost:4000/admin')
 })
 
 // USER LOGIN
