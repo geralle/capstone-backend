@@ -118,7 +118,9 @@ function deleteUserById(data){
 }
 
 function editUserById(data){
-  return db('users').where('id', data.id).update({
+  return db('users')
+  .where('id', data.id)
+  .update({
     f_name: data.f_name,
     l_name: data.l_name,
     email: data.email,

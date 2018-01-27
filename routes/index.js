@@ -60,7 +60,7 @@ router.post('/api/appointment/create', function(req,res){
 router.put('/api/user/edit', function(req,res){
   db.editUserById(req.body)
   .then(function(data){
-    res.json(data)
+    res.redirect('http://localhost:4000/myaccount')
   })
 })
 
