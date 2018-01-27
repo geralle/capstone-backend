@@ -10,6 +10,11 @@ router.get('/', function(req, res){
   })
 })
 
+router.get('/api/generatetoken', function(req, res){
+  var token = db.generateToken()
+  res.send(token)
+})
+
 // APPROVE APPT BY ID
 router.put('/api/approveappt/:id/edit', function(req,res){
   db.approveAppointmentById(req.params).then(function(data){
@@ -107,7 +112,7 @@ router.post('/api/user/login', function(req,res){
       .then(function(data){
         res.cookie('token', '')
         res.cookie('token', token)
-        res.redirect('http://localhost:4000/')
+        // res.redirect('http://localhost:4000/')
       })
     }else{
       res.redirect('http://localhost:4000/login?=error')
