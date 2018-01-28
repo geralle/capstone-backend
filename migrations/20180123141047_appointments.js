@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('appointments',function(table){
       table.increments()
       table.string('month')
-      table.string('day')
+      table.integer('day')
       table.string('year')
       table.integer('hour')
       table.integer('minute')

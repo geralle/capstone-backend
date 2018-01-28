@@ -89,6 +89,12 @@ function getAllApptsByUser(data){
   .where('user_id',data.user_id)
 }
 
+function joinApptsUsers(){
+  return db.select('*').from('users_appts')
+  .innerJoin('users','users_appts.user_id', 'users.id')
+  .innerJoin('appointments', 'users_appts.appt_id', 'appointments.id')
+}
+
 function getAllUsers(){
   return db.select('*').from('users')
 }
@@ -169,5 +175,6 @@ module.exports = {
   releaseToken,
   getUserByUserToken,
   generateToken,
-  deleteApptById
+  deleteApptById,
+  joinApptsUsers
 }

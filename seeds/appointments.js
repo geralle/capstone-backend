@@ -7,33 +7,55 @@ exports.seed = function(knex, Promise) {
       return knex('appointments').insert([
         {
           month: '1',
-          day: '25',
+          day: 25,
           year: '2018',
           hour: '3',
           minute: '00',
-          ampm: 'pm',
+          ampm: 'PM',
           description: 'I want something that looks cool',
-          approved: false,
+          approved: true,
           title: 'geralle_125201815:00'
         },
         {
           month: '1',
-          day: '26',
+          day: 26,
           year: '2018',
           hour: '6',
           minute: '30',
-          ampm: 'pm',
+          ampm: 'PM',
           description: 'I want something that looks cool',
-          approved: false,
+          approved: true,
           title: 'geralle_126201818:30'
         },
         {
           month: '1',
-          day: '27',
+          day: 27,
           year: '2018',
           hour: '11',
           minute: '00',
-          ampm: 'am',
+          ampm: 'AM',
+          description: 'I want something that looks cool',
+          approved: true,
+          title: 'geralle_127201811:00'
+        },
+        {
+          month: '1',
+          day: 27,
+          year: '2018',
+          hour: '10',
+          minute: '00',
+          ampm: 'AM',
+          description: 'I want something that looks cool',
+          approved: true,
+          title: 'geralle_127201811:00'
+        },
+        {
+          month: '2',
+          day: 2,
+          year: '2018',
+          hour: '11',
+          minute: '00',
+          ampm: 'AM',
           description: 'I want something that looks cool',
           approved: false,
           title: 'geralle_127201811:00'

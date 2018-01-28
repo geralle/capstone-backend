@@ -10,6 +10,13 @@ router.get('/', function(req, res){
   })
 })
 
+router.get('/api/users/appts/all', function(req,res){
+  db.joinApptsUsers()
+  .then(function(data){
+    res.json(data)
+  })
+})
+
 // GENERATES A TOKEN FOR CLIENT AND BACKEND
 router.get('/api/generatetoken', function(req, res){
   var token = db.generateToken()
@@ -129,8 +136,8 @@ router.post('/api/user/login', function(req,res){
       var token = req.body.token
       db.updateToken(req.body.email,token)
       .then(function(data){
-        res.cookie('token', '')
-        res.cookie('token', token)
+        // res.cookie('token', '')
+        // res.cookie('token', token)
         res.redirect('http://localhost:4000/')
       })
     }else{
@@ -146,6 +153,7 @@ router.post('/api/user/logout/:token', function(req, res){
   .then(()=>{})
   res.redirect('http://localhost:4000')
 })
+
 
 // GET ALL APPOINTMENT BY USER
 router.get('/api/user/appts/:user_id', function(req,res){
