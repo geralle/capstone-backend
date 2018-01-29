@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
           month: '1',
           day: 25,
           year: '2018',
-          hour: '3',
+          hour: '1',
           minute: '00',
           ampm: 'PM',
           description: 'I want something that looks cool',
@@ -20,9 +20,9 @@ exports.seed = function(knex, Promise) {
           month: '1',
           day: 26,
           year: '2018',
-          hour: '6',
+          hour: '10',
           minute: '30',
-          ampm: 'PM',
+          ampm: 'AM',
           description: 'I want something that looks cool',
           approved: true,
           title: 'geralle_126201818:30'
@@ -36,28 +36,6 @@ exports.seed = function(knex, Promise) {
           ampm: 'AM',
           description: 'I want something that looks cool',
           approved: true,
-          title: 'geralle_127201811:00'
-        },
-        {
-          month: '1',
-          day: 27,
-          year: '2018',
-          hour: '10',
-          minute: '00',
-          ampm: 'AM',
-          description: 'I want something that looks cool',
-          approved: true,
-          title: 'geralle_127201811:00'
-        },
-        {
-          month: '2',
-          day: 2,
-          year: '2018',
-          hour: '11',
-          minute: '00',
-          ampm: 'AM',
-          description: 'I want something that looks cool',
-          approved: false,
           title: 'geralle_127201811:00'
         }
       ]);
