@@ -27,10 +27,10 @@ router.get('/api/generatetoken', function(req, res){
 // APPROVE APPT BY ID
 router.put('/api/approveappt/:id/edit', function(req,res){
   db.approveAppointmentById(req.params)
-  // .then(function(data){
-  //   res.json(data)
-  // })
-  // res.redirect('http://localhost:4000/admin')
+  .then(function(data){
+    res.json(data)
+  })
+  res.redirect('http://localhost:4000/admin')
 })
 
 // CREATE APPOINTMENTS
@@ -62,14 +62,14 @@ router.post('/api/appointment/create', function(req,res){
       })
     })
   }
-  res.redirect('https://geralle-capstone.firebaseapp.com/myaccount')
+  res.redirect('http://localhost:4000/myaccount')
 })
 
 // EDIT USER BY ID
 router.put('/api/user/edit', function(req,res){
   db.editUserById(req.body)
   .then(function(data){
-    res.redirect('https://geralle-capstone.firebaseapp.com/myaccount')
+    res.redirect('http://localhost:4000/myaccount')
   })
 })
 
@@ -78,7 +78,7 @@ router.post('/api/user/create', function(req,res){
   db.checkUserEmail(req.body)
   .then(function(data){
     if(data[0]){
-      res.redirect('https://geralle-capstone.firebaseapp.com/register?=error')
+      res.redirect('http://localhost:4000/register?=error')
     }else{
       db.createANewUser(req.body)
       .then(function(data){
@@ -88,10 +88,10 @@ router.post('/api/user/create', function(req,res){
           .then(function(data){
             res.clearCookie('token')
             res.cookie('token', token)
-            res.redirect('https://geralle-capstone.firebaseapp.com/')
+            res.redirect('http://localhost:4000/')
           })
         }else{
-          res.redirect('https://geralle-capstone.firebaseapp.com/register?=error')
+          res.redirect('http://localhost:4000/register?=error')
         }
       })
     }
@@ -125,7 +125,7 @@ router.delete('/api/user/:id/delete', function(req,res){
 router.delete('/api/appts/:id/delete', function(req,res){
   db.deleteApptById(req.body)
   .then(()=>{})
-  res.redirect('https://geralle-capstone.firebaseapp.com/admin')
+  res.redirect('http://localhost:4000/admin')
 })
 
 // USER LOGIN
@@ -136,10 +136,12 @@ router.post('/api/user/login', function(req,res){
       var token = req.body.token
       db.updateToken(req.body.email,token)
       .then(function(data){
-        res.redirect('https://geralle-capstone.firebaseapp.com/')
+        // res.cookie('token', '')
+        // res.cookie('token', token)
+        res.redirect('http://localhost:4000/')
       })
     }else{
-      res.redirect('https://geralle-capstone.firebaseapp.com/login?=error')
+      res.redirect('http://localhost:4000/login?=error')
     }
   })
 })
@@ -149,7 +151,7 @@ router.post('/api/user/logout/:token', function(req, res){
   var token = req.params.token
   db.releaseToken(token)
   .then(()=>{})
-  res.redirect('https://geralle-capstone.firebaseapp.com/')
+  res.redirect('http://localhost:4000')
 })
 
 
