@@ -25,7 +25,7 @@ router.get('/api/generatetoken', function(req, res){
 })
 
 // APPROVE APPT BY ID
-router.put('', function(req,res){
+router.put('/api/approveappt/:id/edit', function(req,res){
   db.approveAppointmentById(req.params)
   .then(function(data){
     res.json(data)
