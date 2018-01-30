@@ -25,43 +25,32 @@ router.get('/api/generatetoken', function(req, res){
 })
 
 // APPROVE APPT BY ID
-router.put('/api/approveappt/:id/edit', function(req,res){
+router.put('', function(req,res){
   db.approveAppointmentById(req.params)
   .then(function(data){
     res.json(data)
   })
-  res.redirect('http://localhost:4000/admin')
+  // res.redirect('http://localhost:4000/admin')
 })
 
 // CREATE APPOINTMENTS
 router.post('/api/appointment/create', function(req,res){
   var appointmentIds = []
   var apptObj = {}
-  for(var i=0;i<3;i++){
-    var month = req.body.month[i],
-        day = req.body.day[i],
-        year = req.body.year[i],
-        hour = req.body.hour[i],
-        minute = req.body.minute[i],
-        ampm = req.body.ampm[i],
-        description =  req.body.description,
-        title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
-    apptObj[i] = {
-      month: month,
-      day: day,
-      year: year,
-      hour: hour,
-      minute: minute,
-      ampm: ampm,
-      description: description,
-      title: title
-    }
-    db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
-      db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
-        console.log(data)
-      })
+  var month = req.body.month,
+      day = req.body.day,
+      year = req.body.year,
+      hour = req.body.hour,
+      minute = req.body.minute,
+      ampm = req.body.ampm,
+      description =  req.body.description
+      title = req.body.title
+
+  db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
+    db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
+      console.log(data)
     })
-  }
+  })
   res.redirect('http://localhost:4000/myaccount')
 })
 

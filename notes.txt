@@ -1,3 +1,61 @@
+// for(var i=0;i<3;i++){
+//   var month = req.body.month[i],
+//       day = req.body.day[i],
+//       year = req.body.year[i],
+//       hour = req.body.hour[i],
+//       minute = req.body.minute[i],
+//       ampm = req.body.ampm[i],
+//       description =  req.body.description,
+//       title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
+//   apptObj[i] = {
+//     month: month,
+//     day: day,
+//     year: year,
+//     hour: hour,
+//     minute: minute,
+//     ampm: ampm,
+//     description: description,
+//     title: title
+//   }
+//   db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
+//     db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
+//       console.log(data)
+//     })
+//   })
+// }
+
+
+
+
+
+
+
+
+//   var month = req.body.month[i],
+//       day = req.body.day[i],
+//       year = req.body.year[i],
+//       hour = req.body.hour[i],
+//       minute = req.body.minute[i],
+//       ampm = req.body.ampm[i],
+//       description =  req.body.description,
+//       title = req.body.f_name+'_'+req.body.month[i]+req.body.day[i]+req.body.year[i]+req.body.hour[i]+req.body.minute[i]
+//   apptObj[i] = {
+//     month: month,
+//     day: day,
+//     year: year,
+//     hour: hour,
+//     minute: minute,
+//     ampm: ampm,
+//     description: description,
+//     title: title
+//   }
+//   db.createAppointment(month,day,year,hour,minute,ampm,description,title).then(function(apptId){
+//     db.createUserAppts(apptId[0],req.body.user_id).then(function(data){
+//       console.log(data)
+//     })
+//   })
+// }
+
 router.post('/api/appointment/create', function(req,res){
   var appointmentIds = []
   var apptObj = {}
